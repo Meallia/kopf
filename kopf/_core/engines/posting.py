@@ -184,11 +184,6 @@ class K8sPoster(logging.Handler):
     A handler to post all log messages as K8s events.
     """
 
-    def createLock(self) -> None:
-        # Save some time on unneeded locks. Events are posted in the background.
-        # We only put events to the queue, which is already lock-protected.
-        self.lock = None
-
     def filter(self, record: logging.LogRecord) -> bool:
         # Only those which have a k8s object referred (see: `ObjectLogger`).
         # Otherwise, we have nothing to post, and nothing to do.
